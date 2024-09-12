@@ -1,5 +1,11 @@
 import axios from "axios";
 
+type Team = {
+  logo: string;
+  id: number;
+  name: string;
+};
+
 export default function Home() {
   axios.defaults.withCredentials = true;
   const leagueId = process.env.LEAGUE_ID;
@@ -13,10 +19,9 @@ export default function Home() {
   const headers = {
     'Cookie': cookies
   }
-  var teamsArray = []
+  var teamsArray: Team[] = []
   axios.get(getAllTeamsURL, { headers }).then((response) => { 
-    
-    console.log("numTeams in league is " + response.data.teams.length);
+    // console.log("numTeams in league is " + response.data.teams.length);
     for (var i = 0; i < response.data.teams.length; i++) { 
       teamsArray.push({
         "logo": response.data.teams[i].logo,
@@ -30,13 +35,14 @@ export default function Home() {
     const results = response.data;
     const idsArray = teamsArray.map(team => team.id);
     idsArray.forEach(id => {
-      const individualTeam = results.teams.find(team => team.id === id);
+      const individualTeam = results.teams.find((team: { id: number; }) => team.id === id);
       // console.log(individualTeam.roster.entries[2].playerPoolEntry.player.fullName); -> individual player name
       // console.log(individualTeam.roster.entries.length); -> number of players on team
-      for (var i = 0; i < individualTeam.roster.entries.length; i++) { 
-        var individualPlayer = individualTeam.roster.entries[i].playerPoolEntry.player;
-        console.log(individualPlayer.fullName + " " + individualPlayer.id);
-      };
+      const teamRoster = individualTeam.roster.entries;
+      // console.log(teamRoster);
+      teamRoster.forEach((roster: { playerPoolEntry: { player: { fullName: string; id: string; }; }; }) => {
+        console.log(roster.playerPoolEntry.player.fullName + " " + roster.playerPoolEntry.player.id);
+      })
     });
 
   });
