@@ -2,7 +2,7 @@ import axios from "axios";
 import TeamsClient from "@/app/teams/teamsClient";
 
 import type { Team } from "@/app/types";
-import IndividualRoster from "../components/IndividualRoster";
+import { formatInjuryStatus } from "../utils/individualPlayerUtils";
 
 export default async function Teams() {
   axios.defaults.withCredentials = true;
@@ -41,22 +41,24 @@ export default async function Teams() {
       const individualTeam = results.teams.find((team: { id: number; }) => team.id === id);
       const teamRoster = individualTeam.roster.entries;
 
-      teamRoster.forEach((roster: { playerPoolEntry: { player: { fullName: string; id: string; injuryStatus: string; }; }; }) => {
+      teamRoster.forEach((roster: any) => {
         const teamToAddTo = teamsArray.find((team: { id: number; }) => team.id === id);
         const player = {
           "name": roster.playerPoolEntry.player.fullName,
           "id": roster.playerPoolEntry.player.id,
-          "injuryStatus": roster.playerPoolEntry.player.injuryStatus === undefined ? "N/A" : roster.playerPoolEntry.player.injuryStatus
+          "injuryStatus": roster.playerPoolEntry.player.injuryStatus === undefined ? "N/A" : formatInjuryStatus(roster.playerPoolEntry.player.injuryStatus),
+          "positionId": roster.playerPoolEntry.player.defaultPositionId,
+          "positionInLineup": roster.lineupSlotId
         }
         teamToAddTo?.players.push(player);
       })
     });
   });
-
   await axios.get(leagueSettingsURL, { headers }).then((response) => {
     const results = response.data;
     leagueName = results.settings.name;
   });
+
   return (
     <div>
       <h1 className="text-4xl text-center mb-4">{leagueName}</h1>
