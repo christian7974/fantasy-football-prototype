@@ -2,6 +2,7 @@ import axios from "axios";
 import TeamsClient from "@/app/teams/teamsClient";
 
 import type { Team } from "@/app/types";
+import IndividualRoster from "../components/IndividualRoster";
 
 export default async function Teams() {
   axios.defaults.withCredentials = true;
