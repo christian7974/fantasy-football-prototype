@@ -90,6 +90,31 @@ export function getPosition(positionId: number): string {
     }
 }
 
+export function getLineupPosition(positionInLineup: number): string { 
+    switch(positionInLineup) { 
+        case 0:
+            return "QB";
+        case 2:
+            return "RB";
+        case 4:
+            return "WR";
+        case 6:
+            return "TE";
+        case 7:
+            return "FLEX";
+        case 16:
+            return "D/ST";
+        case 17:
+            return "K";
+        case 20:
+            return "BENCH";
+        case 21:
+            return "IR";
+        default:
+            return "N/A";
+    }
+}
+
 export function formatInjuryStatus(injuryStatus :string): string {
     if (!injuryStatus) {
         return ""

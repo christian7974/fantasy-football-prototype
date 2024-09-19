@@ -37,6 +37,7 @@ export default async function Teams() {
   await axios.get(getTeamsRosterURL, { headers }).then((response) => {
     const results = response.data;
     const idsArray = teamsArray.map(team => team.id);
+    console.log(getTeamsRosterURL);
     idsArray.forEach(id => {
       const individualTeam = results.teams.find((team: { id: number; }) => team.id === id);
       const teamRoster = individualTeam.roster.entries;
@@ -50,6 +51,9 @@ export default async function Teams() {
           "positionId": roster.playerPoolEntry.player.defaultPositionId,
           "positionInLineup": roster.lineupSlotId
         }
+        if (player.positionInLineup === 23) {
+          player.positionInLineup = 7;
+        }
         teamToAddTo?.players.push(player);
       })
     });
@@ -62,9 +66,9 @@ export default async function Teams() {
   return (
     <div>
       <h1 className="text-4xl text-center mb-4">{leagueName}</h1>
-      <div className="flex justify-center">
+      <>
         <TeamsClient arrayOfTeams={teamsArray} />
-      </div>
+      </>
     </div>
   );
 }

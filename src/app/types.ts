@@ -24,6 +24,18 @@ export enum Position {
     DST = 16
 }
 
+export enum PositionInLineup {
+    QB = 0,
+    RB = 2,
+    WR = 4,
+    TE = 6,
+    FLEX = 7,
+    DST = 16,
+    K = 17,
+    BENCH = 20,
+    IR = 21
+}
+
 export enum DefensePhotos {
     Cardinals = "Cardinals",
     Falcons = "Falcons",
