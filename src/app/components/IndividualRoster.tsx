@@ -6,13 +6,15 @@ import IndividualPlayer from "./IndividualPlayer";
 export default function IndividualRoster({roster}: {roster: Player[]}) { 
     roster.sort((a, b) => a.positionInLineup - b.positionInLineup);
     return (
-    <div className="w-[350px]">
-        {roster.map((player, idx) => (
-            <div className="">
-                <h1 className="bg-purple-300 w-fit">{getLineupPosition(player.positionInLineup)}</h1>
-                <IndividualPlayer player={player} key={player.id} idx={idx} />
+        <div className="">
+          {roster.map((player, idx) => (
+            <div className="flex" key={player.id}>
+              <h1 className={`my-auto w-[70px] text-black h-full`}>
+                {getLineupPosition(player.positionInLineup)}
+              </h1>
+              <IndividualPlayer player={player} idx={idx} />
             </div>
-        ))}
-        
-    </div>)
+          ))}
+        </div>
+      );
 };
