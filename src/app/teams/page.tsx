@@ -1,7 +1,7 @@
 import axios from "axios";
 import TeamsClient from "@/app/teams/teamsClient";
 
-import type { Team } from "@/app/types";
+import type { Player, Team } from "@/app/types";
 import { formatInjuryStatus } from "../utils/individualPlayerUtils";
 
 export default async function Teams() {
@@ -43,12 +43,13 @@ export default async function Teams() {
 
       teamRoster.forEach((roster: any) => {
         const teamToAddTo = teamsArray.find((team: { id: number; }) => team.id === id);
-        const player = {
+        const player: Player = {
           "name": roster.playerPoolEntry.player.fullName,
           "id": roster.playerPoolEntry.player.id,
           "injuryStatus": roster.playerPoolEntry.player.injuryStatus === undefined ? "N/A" : formatInjuryStatus(roster.playerPoolEntry.player.injuryStatus),
           "positionId": roster.playerPoolEntry.player.defaultPositionId,
-          "positionInLineup": roster.lineupSlotId
+          "positionInLineup": roster.lineupSlotId,
+          "proTeam": roster.playerPoolEntry.player.proTeamId,
         }
         if (player.positionInLineup === 23) {
           player.positionInLineup = 7;

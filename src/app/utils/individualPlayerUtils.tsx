@@ -1,4 +1,4 @@
-import { DefensePhotos, Position } from "@/app/types";
+import { DefensePhotos, Position, NFLTeamIds } from "@/app/types";
 
 export function getDefensePhoto(teamName: string): string {
     switch (teamName) {
@@ -71,7 +71,7 @@ export function getDefensePhoto(teamName: string): string {
     }
 }
 
-export function getPosition(positionId: number): string { 
+export function getProPosition(positionId: number): string { 
     switch(positionId) { 
         case Position.QB:
             return "QB";
@@ -107,7 +107,7 @@ export function getLineupPosition(positionInLineup: number): string {
         case 17:
             return "K";
         case 20:
-            return "BENCH";
+            return "Bench";
         case 21:
             return "IR";
         default:
@@ -119,6 +119,16 @@ export function formatInjuryStatus(injuryStatus :string): string {
     if (!injuryStatus) {
         return ""
     }
+    else if (injuryStatus != "ACTIVE" && injuryStatus != "INJURY_RESERVE") {
+        injuryStatus = injuryStatus[0];
+    } else if (injuryStatus == "INJURY_RESERVE") {
+        var injuryStatusAsArray = injuryStatus.split("_");
+        return injuryStatusAsArray[0][0] + injuryStatusAsArray[1][0];
+    }
     injuryStatus = injuryStatus.replace("_", " ");
     return injuryStatus.toLowerCase().replace(/\b\w/g, s => s.toUpperCase());
   }
+
+export function getPlayersProTeam(proTeamId: number): string {
+    return NFLTeamIds[proTeamId];
+}

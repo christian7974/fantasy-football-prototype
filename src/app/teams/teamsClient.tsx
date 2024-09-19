@@ -9,7 +9,7 @@ export default function TeamsClient({arrayOfTeams} : {arrayOfTeams: Team[]}) {
     
     const [currentTeam, setCurrentTeam] = useState({} as Team);
     return ( 
-    <div className="flex justify-center gap-x-3">
+    <div className="flex flex-col md:flex-row justify-center gap-x-3">
         <div className={``}>
             {arrayOfTeams.map(team => (
                 <IndividualTeam team={team} key={team.id} onClick={() => setCurrentTeam(team)}/>
