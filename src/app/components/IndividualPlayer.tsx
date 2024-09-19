@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { Player } from "../types";
 
-import { getDefensePhoto, getPosition } from "../utils/individualPlayerUtils";
+import { getDefensePhoto, getPosition, getLineupPosition } from "../utils/individualPlayerUtils";
 
 export default function IndividualPlayer({player, idx}: {player: Player, idx: number}) { 
     const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -16,7 +16,8 @@ export default function IndividualPlayer({player, idx}: {player: Player, idx: nu
     
     const placeholderImage = "https://a.espncdn.com/combiner/i?img=/games/lm-static/ffl/images/nomug.png&w=96&h=70&cb=1";
     return (
-    <div className={`text-center flex w-full text-black items-center ${evenPlayerIndex ? "bg-slate-100" : "bg-slate-300"}`}>
+    <div className={`pl-1 text-center flex w-[350px] text-black items-center ${evenPlayerIndex ? "bg-slate-100" : "bg-slate-300"}`}>
+        <p className="w-[100px] text-left">{getLineupPosition(player.positionInLineup)}</p>
         <div className="flex-shrink-0 w-20 h-18 flex items-center justify-center">
             <img 
             src={isImageLoaded ? playerImage : placeholderImage} 
@@ -25,7 +26,7 @@ export default function IndividualPlayer({player, idx}: {player: Player, idx: nu
             />
         </div>
         <div id="player-info" className="w-[70%]">
-            <p className="w-fit">{player.name}</p>
+        <p className="w-fit">{player.name}</p>
             <div className="flex">
                 <p className="mr-3">{getPosition(player.positionId)}</p> 
                 {player.injuryStatus != "N/A" && <p className="">{player.injuryStatus}</p>}

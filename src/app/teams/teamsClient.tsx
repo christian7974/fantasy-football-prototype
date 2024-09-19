@@ -6,16 +6,16 @@ import IndividualRoster from "@/app/components/IndividualRoster";
 import type { Team, Player } from "@/app/types";
 // List container
 export default function TeamsClient({arrayOfTeams} : {arrayOfTeams: Team[]}) {
-    var [currentRoster, setCurrentRoster] = useState([] as Player[]);
+    const [currentTeam, setCurrentTeam] = useState({} as Team);
     return ( 
     <div className="flex justify-center gap-x-3">
         <div className={``}>
             {arrayOfTeams.map(team => (
-                <IndividualTeam team={team} key={team.id} onClick={() => setCurrentRoster(team.players)}/>
+                <IndividualTeam team={team} key={team.id} onClick={() => setCurrentTeam(team)}/>
             ))}
         </div>
         <div className="bg-slate-500">
-            {currentRoster.length != 0 && (<IndividualRoster roster={currentRoster} />)}
+            {currentTeam.players && (<IndividualRoster roster={currentTeam.players} />)}
         </div> 
     </div>
     )
