@@ -3,9 +3,10 @@ import { useState } from "react";
 
 import IndividualTeam from "@/app/components/IndividualTeam";
 import IndividualRoster from "@/app/components/IndividualRoster";
-import type { Team, Player } from "@/app/types";
+import type { Team } from "@/app/types";
 // List container
 export default function TeamsClient({arrayOfTeams} : {arrayOfTeams: Team[]}) {
+    
     const [currentTeam, setCurrentTeam] = useState({} as Team);
     return ( 
     <div className="flex justify-center gap-x-3">
@@ -14,9 +15,10 @@ export default function TeamsClient({arrayOfTeams} : {arrayOfTeams: Team[]}) {
                 <IndividualTeam team={team} key={team.id} onClick={() => setCurrentTeam(team)}/>
             ))}
         </div>
-        <div className="bg-slate-500">
+        <div>
+            {currentTeam.name && <h1 className="text-3xl text-center">{currentTeam.name}</h1>}
             {currentTeam.players && (<IndividualRoster roster={currentTeam.players} />)}
-        </div> 
+        </div>
     </div>
     )
 }
