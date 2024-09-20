@@ -14,6 +14,7 @@ export type Team = {
     players: Player[];
     wins: number;
     losses: number;
+    powerRankingsRank: number;
   };
 
 export enum Position {

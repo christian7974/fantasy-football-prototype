@@ -26,7 +26,6 @@ export default async function Teams() {
     // find the memeber in results.members with the same SWID
     const member = results.members.find((member: { id: string; }) => member.id === `{${process.env.SWID}}`);
     isCommissioner = member.isLeagueManager;
-    console.log(isCommissioner);
   });
 
   await axios.get(getAllTeamsURL, { headers }).then((response) => { 
@@ -37,7 +36,8 @@ export default async function Teams() {
         "name": response.data.teams[i].name,
         "players": [],
         "wins": response.data.teams[i].record.overall.wins,
-        "losses": response.data.teams[i].record.overall.losses
+        "losses": response.data.teams[i].record.overall.losses,
+        "powerRankingsRank": i + 1,
       })
     }
     teamsArray.sort((a, b) => (b.wins - a.wins));
