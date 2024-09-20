@@ -1,7 +1,7 @@
 import type { Team } from "../types";
 
 export default function PowerRankingsClient({isCommish, allTeams} : {isCommish: boolean, allTeams: Team[]}) {
-    allTeams.sort((a, b) => (a.powerRankingsRank - b.powerRankingsRank))
+    allTeams.sort((a, b) => (a.powerRankingsRank - b.powerRankingsRank));
     return (
         <>
             <div>
