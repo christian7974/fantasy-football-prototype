@@ -9,16 +9,25 @@ export default async function Teams() {
   const leagueId = process.env.LEAGUE_ID;
   const year = String(2024);
 
+  const baseURL = "https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/" + year + "/segments/0/leagues/" + leagueId;
   const getTeamsRosterURL = "https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/" + year + "/segments/0/leagues/" + leagueId + "?view=mRoster";
   const getAllTeamsURL = "https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/" + year + "/segments/0/leagues/" + leagueId + "?view=mTeam"
   const leagueSettingsURL = "https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/" + year + "/segments/0/leagues/" + leagueId + "?view=mSettings";
   const cookies = `swid={${process.env.SWID}}; espn_s2=${process.env.ESPN_S2}`;
-
+  var isCommissioner = false;
   const headers = {
     'Cookie': cookies
   }
   var teamsArray: Team[] = [];
   var leagueName = "";
+
+  await axios.get(baseURL, { headers }).then((response) => { 
+    const results = response.data;
+    // find the memeber in results.members with the same SWID
+    const member = results.members.find((member: { id: string; }) => member.id === `{${process.env.SWID}}`);
+    isCommissioner = member.isLeagueManager;
+    console.log(isCommissioner);
+  });
 
   await axios.get(getAllTeamsURL, { headers }).then((response) => { 
     for (var i = 0; i < response.data.teams.length; i++) { 
@@ -62,12 +71,12 @@ export default async function Teams() {
     const results = response.data;
     leagueName = results.settings.name;
   });
-
+  
   return (
     <div>
       <h1 className="text-4xl text-center mb-4">{leagueName}</h1>
       <>
-        <TeamsClient arrayOfTeams={teamsArray} />
+        <TeamsClient arrayOfTeams={teamsArray} isCommish={isCommissioner} />
       </>
     </div>
   );

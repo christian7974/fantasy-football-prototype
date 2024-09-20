@@ -5,7 +5,7 @@ import IndividualTeam from "@/app/components/IndividualTeam";
 import IndividualRoster from "@/app/components/IndividualRoster";
 import type { Team } from "@/app/types";
 // List container
-export default function TeamsClient({arrayOfTeams} : {arrayOfTeams: Team[]}) {
+export default function TeamsClient({arrayOfTeams, isCommish} : {arrayOfTeams: Team[], isCommish: boolean}) {
     
     const [currentTeam, setCurrentTeam] = useState({} as Team);
     return ( 
