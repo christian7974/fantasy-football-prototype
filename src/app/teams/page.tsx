@@ -76,7 +76,7 @@ export default async function Teams() {
     <div>
       <h1 className="text-4xl text-center mb-4">{leagueName}</h1>
       <>
-        <TeamsClient arrayOfTeams={teamsArray} isCommish={isCommissioner} />
+        <TeamsClient arrayOfTeams={teamsArray} isCommissioner={isCommissioner} />
       </>
     </div>
   );

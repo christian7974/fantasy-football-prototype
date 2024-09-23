@@ -5,7 +5,7 @@ export default function PowerRankings() {
         <div>
             <Link href="/teams">View Teams</Link> 
             <h1>Power Rankings</h1>
-            <PowerRankingsClient isCommish={true} allTeams={[]} />
+            <PowerRankingsClient />
         </div>
     )
 }
