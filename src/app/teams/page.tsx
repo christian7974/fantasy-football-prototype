@@ -71,7 +71,8 @@ export default async function Teams() {
     const results = response.data;
     leagueName = results.settings.name;
   });
-  
+
+
   return (
     <div>
       <h1 className="text-4xl text-center mb-4">{leagueName}</h1>

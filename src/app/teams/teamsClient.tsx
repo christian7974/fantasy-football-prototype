@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 import IndividualTeam from "@/app/components/IndividualTeam";
@@ -13,8 +13,14 @@ import { IsCommishContext } from "../context/isCommishContext";
 export default function TeamsClient({arrayOfTeams, isCommissioner} : {arrayOfTeams: Team[], isCommissioner: boolean}) {
     const {allTeams, setAllTeams} = useContext(TeamsContext);
     const {isCommish, setIsCommish} = useContext(IsCommishContext);
-    setAllTeams(arrayOfTeams);
-    setIsCommish(isCommissioner);
+    useEffect(() => {
+        setAllTeams(arrayOfTeams);
+    }, [setAllTeams]);
+    
+    useEffect(() => {
+        setIsCommish(isCommissioner);
+    }, [setIsCommish])
+
     const [currentTeam, setCurrentTeam] = useState({} as Team);
     return ( 
     <div className="flex flex-col md:flex-row justify-center gap-x-3">
