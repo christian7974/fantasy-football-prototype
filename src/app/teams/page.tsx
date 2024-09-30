@@ -37,7 +37,10 @@ export default async function Teams() {
         "players": [],
         "wins": response.data.teams[i].record.overall.wins,
         "losses": response.data.teams[i].record.overall.losses,
-        "powerRankingsRank": i + 1,
+        "powerRankings": {
+          rank: i + 1,
+          reasonForRank: "N/A" + i
+        },
       })
     }
     teamsArray.sort((a, b) => (b.wins - a.wins));
