@@ -5,6 +5,7 @@ import type { Player, Team } from "@/app/types";
 import { formatInjuryStatus } from "../utils/individualPlayerUtils";
 
 export default async function Teams() {
+  // TODO: Abstract this code outside of this component to be used anywhere on the page.
   axios.defaults.withCredentials = true;
   const leagueId = process.env.LEAGUE_ID;
   const year = String(2024);

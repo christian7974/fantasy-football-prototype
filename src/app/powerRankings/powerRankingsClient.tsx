@@ -7,8 +7,10 @@ import { useContext, useState, useEffect } from "react";
 import { TeamsContext } from "../context/teamsContext";
 import { IsCommishContext } from "../context/isCommishContext";
 import { Team } from "../types";
+import { all } from "axios";
+import IndividualRoster from "../components/IndividualRoster";
 
-// TODO: Create a custom input for the power rankings to make it look better.
+// TODO: Create TeamInRankingsComponent for leaner code.
 // TODO: Create better logic for error messages.
 export default function PowerRankingsClient() {
     const {allTeams, setAllTeams} = useContext(TeamsContext);
@@ -85,7 +87,10 @@ export default function PowerRankingsClient() {
         console.log(updatedTeams);
     };
     
+    const [currentTeam, setCurrentTeam] = useState(allTeams[0]);
+
     allTeams.sort((a, b) => a.powerRankings.rank - b.powerRankings.rank);
+
     return (
         <div className="flex flex-col justify-center items-center min-h-screen">
             {isCommish && (
@@ -96,27 +101,33 @@ export default function PowerRankingsClient() {
             <div className={`${errorMessage[0] === "R" ? "bg-green-500" : "bg-red-500"} w-fit px-2`}>
                 <p>{errorMessage}</p>
             </div>
-            <div className="flex flex-col gap-3">
-                {allTeams.map((team: Team) => (
-                    <div key={team.id} className="bg-blue-900 rounded-md flex flex-col items-center py-2 px-3">
-                        <h1 key={team.id}>{team.name}</h1>
-                        <input 
-                            type="number" 
-                            className="text-black mb-2" 
-                            min={1} 
-                            value={rankInputs[team.id]} 
-                            max={allTeams.length} 
-                            onChange={(e) => handleRankChange(team.id, e.target.value)}>
-                        </input>
-                        <textarea 
-                            className="text-black min-h-7 max-h-28 min-w-96" 
-                            value={descInputs[team.id]} 
-                            onChange={(e) => handleDescChange(team.id, e.target.value)}
-                            maxLength={250}
-                            >
-                        </textarea>
-                    </div>
-                ))}
+            <div className="flex flex-row">
+                <IndividualRoster roster={currentTeam.players} />
+                <div className="flex flex-col gap-3">
+                    {allTeams.map((team: Team) => (
+                        <div key={team.id} className="bg-blue-900 rounded-md flex flex-col items-center py-2 px-3">
+                            <h1 
+                                key={team.id} 
+                                onClick={() => setCurrentTeam(team)}
+                                className="hover:cursor-pointer hover:text-red-400">{team.name}</h1>
+                            <input 
+                                type="number" 
+                                className="text-black mb-2" 
+                                min={1} 
+                                value={rankInputs[team.id]} 
+                                max={allTeams.length} 
+                                onChange={(e) => handleRankChange(team.id, e.target.value)}>
+                            </input>
+                            <textarea 
+                                className="text-black min-h-7 max-h-28 min-w-96" 
+                                value={descInputs[team.id]} 
+                                onChange={(e) => handleDescChange(team.id, e.target.value)}
+                                maxLength={250}
+                                >
+                            </textarea>
+                        </div>
+                    ))}
+                </div>
             </div>            
         </div>
     )
