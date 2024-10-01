@@ -18,7 +18,7 @@ export default function IndividualPlayer({player, idx}: {player: Player, idx: nu
         <div className="flex-shrink-0 w-20 h-18 flex items-center justify-center">
             <img 
             src={isImageLoaded ? playerImage : placeholderImage} 
-            className={`${player.positionId != 16 ? "w-20" : "w-16"}`}
+            className={`${player.positionId != 16 ? "w-24" : "w-16"}`}
             onLoad={() => setIsImageLoaded(true)}
             />
         </div>
